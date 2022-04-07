@@ -1,9 +1,9 @@
 pipeline {
   agent any
-  tools {
-    maven 'Maven 3.6.2'
-    jdk 'jdk11'
-  }
+//   tools {
+//     maven 'Maven 3.6.2'
+//     jdk 'jdk11'
+//   }
   stages {
     stage("verify tooling") {
       steps {
@@ -26,7 +26,10 @@ pipeline {
         sh 'docker-compose up -d'
       }
     }
-    stage ('Build') {
+    stage ('Build & Test') {
+
+    withMaven(jdk: 'jdk-11.0.6+10', maven: 'maven-3.3.9') {
+
         steps {
             sh 'mvn -Dmaven.test.failure.ignore=true install'
         }
@@ -35,6 +38,7 @@ pipeline {
                 junit 'target/surefire-reports/**/*.xml'
             }
         }
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 Create and run containers : docker-compose up -d
 
-Tear Down :
+Build: docker-compose build
 
 Up : docker-compose up
 

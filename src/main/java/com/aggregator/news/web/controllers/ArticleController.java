@@ -17,7 +17,7 @@ public class ArticleController {
 
 
     @RequestMapping(value = "/articles", method = RequestMethod.GET)
-    public List<Article> productList(){
+    public List<Article> articleList(){
         return articleService.findAll();
     }
 

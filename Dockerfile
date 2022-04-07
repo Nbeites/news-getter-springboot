@@ -14,6 +14,8 @@ COPY wait-for-sql.sh .
 # split the built app into multiple layers to improve layer rebuild
 # RUN mkdir -p target/docker-packaging && cd target/docker-packaging && jar -xf ../my-app*.jar
 
+EXPOSE 8082
+
 VOLUME /tmp
 ARG news-0.0.1-SNAPSHOT.jar
 COPY target/news-0.0.1-SNAPSHOT.jar news-0.0.1-SNAPSHOT.jar

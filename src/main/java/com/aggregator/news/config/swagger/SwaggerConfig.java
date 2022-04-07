@@ -31,8 +31,8 @@ public class SwaggerConfig {
 
         ApiInfo apiInfo = new ApiInfo(
                 "Patients_API",
-                "REST API Patients.",
-                "1.0",
+                "REST API News.",
+                "0.1",
                 "Terms of Service",
                 new Contact("Nuno Beites", "https://github.com/nbeites",
                         "nm.beites@gmail.com"),

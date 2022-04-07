@@ -19,8 +19,8 @@ pipeline {
     }
     stage('Start container') {
       steps {
-        sh 'docker compose build'
-        sh 'docker compose up -d'
+        sh 'docker-compose build'
+        sh 'docker-compose up -d'
       }
     }
 //     stage('Run tests against the container') {
@@ -33,8 +33,8 @@ pipeline {
 
   post {
     always {
-      sh 'docker compose down --remove-orphans -v'
-      sh 'docker compose ps'
+      sh 'docker-compose down --remove-orphans -v'
+      sh 'docker-compose ps'
     }
   }
 }

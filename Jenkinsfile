@@ -1,3 +1,6 @@
+//Before this runs, we have to install  maven in global tools configuration under manage jenkins in GUI
+// In Git installation also in global tools configuration, set Git Name: Default and Path to git executable : /usr/local/bin/git
+
 pipeline {
   agent any
 //   tools {
@@ -28,8 +31,6 @@ pipeline {
     }
     stage ('Build & Test') {
         steps {
-            git url: 'https://github.com/Nbeites/news-getter-springboot'
-
             withMaven(
                 // Maven installation declared in the Jenkins "Global Tool Configuration"
                 maven: 'maven-3', // (1)

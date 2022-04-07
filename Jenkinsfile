@@ -31,26 +31,25 @@ pipeline {
 
       steps {
         sh 'mvn -Dmaven.test.failure.ignore=true install'
-        junit 'target/surefire-reports/**/*.xml'
       }
     }
 
     stage('docker build/push') {
-         docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
-           def app = docker.build("nbeites/news-getter-springboot:${commit_id}", '.').push()
+          steps {
+             docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
+               def app = docker.build("nbeites/news-getter-springboot:${commit_id}", '.').push()
+             }
          }
     }
 
   }
 
 
-
-
-
   post {
     always {
       sh 'docker-compose down --remove-orphans -v'
       sh 'docker-compose ps'
+      junit 'target/surefire-reports/**/*.xml'
     }
   }
 }

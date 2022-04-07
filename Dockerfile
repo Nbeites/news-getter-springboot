@@ -7,6 +7,7 @@ COPY pom.xml .
 #copy source
 COPY src ./src
 COPY wait-for-sql.sh .
+COPY commands.sh /scripts/commands.sh
 
 # build the app and download dependencies only when these are new (thanks to the cache)
 #RUN mvn clean package -Dmaven.test.skip
@@ -16,10 +17,14 @@ COPY wait-for-sql.sh .
 
 EXPOSE 8082
 
-VOLUME /tmp
-ARG news-0.0.1-SNAPSHOT.jar
-COPY target/news-0.0.1-SNAPSHOT.jar news-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","news-0.0.1-SNAPSHOT.jar"]
+#VOLUME /tmp
+#ARG news-0.0.1-SNAPSHOT.jar
+#COPY target/news-0.0.1-SNAPSHOT.jar news-0.0.1-SNAPSHOT.jar
+#ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","news-0.0.1-SNAPSHOT.jar"]
+
+
+RUN ["chmod", "+x", "/scripts/commands.sh"]
+ENTRYPOINT ["/scripts/commands.sh"]
 
 #copy built app layer by layer
 # ARG DOCKER_PACKAGING_DIR=/app/target/docker-packaging

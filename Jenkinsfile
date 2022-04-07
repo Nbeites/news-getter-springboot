@@ -36,9 +36,11 @@ pipeline {
 
     stage('docker build/push') {
           steps {
-             docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
-               def app = docker.build("nbeites/news-getter-springboot:${commit_id}", '.').push()
-             }
+              script {
+                 docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
+                   def app = docker.build("nbeites/news-getter-springboot:${commit_id}", '.').push()
+                 }
+              }
          }
     }
 

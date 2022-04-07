@@ -28,11 +28,12 @@ pipeline {
     }
     stage ('Build & Test') {
 
-
+      steps {
         withMaven(jdk: 'jdk-11.0.6+10', maven: 'maven-3.3.9') {
                 sh 'mvn -Dmaven.test.failure.ignore=true install'
                 junit 'target/surefire-reports/**/*.xml'
         }
+      }
     }
 
     stage('docker build/push') {

@@ -28,19 +28,24 @@ pipeline {
     }
     stage ('Build & Test') {
 
-        steps {
-            withMaven(jdk: 'jdk-11.0.6+10', maven: 'maven-3.3.9') {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
-            }
-        }
-        post {
-            success {
-                junit 'target/surefire-reports/**/*.xml'
-            }
-        }
 
+        withMaven(jdk: 'jdk-11.0.6+10', maven: 'maven-3.3.9') {
+                sh 'mvn -Dmaven.test.failure.ignore=true install'
+                junit 'target/surefire-reports/**/*.xml'
+        }
     }
+
+    stage('docker build/push') {
+         docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
+           def app = docker.build("nbeites/news-getter-springboot:${commit_id}", '.').push()
+         }
+    }
+
   }
+
+
+
+
 
   post {
     always {

@@ -5,6 +5,8 @@
 // Install Docker Pipeline Plugin -> Add credentials of Dockerhub in Manage Credentials -> Stores scoped to Jenkins, click (global) and add new credentials
 // with 'dockerhub' as ID (same as declared in this jenkinsfile)
 
+//SonarQube Plugin must be installed in jenkins as running on server localhost:9000 with the name 'sonarqube' (this example)
+
 
 
 pipeline {
@@ -31,20 +33,22 @@ pipeline {
         sh 'docker-compose up -d'
       }
     }
-    stage ('Build & Test') {
+    stage ('Build & Test w/ SonarQube') {
         steps {
-              // Run the maven install w/ tests
-              sh "mvn -Dmaven.test.failure.ignore=true install"
-            }
+              // Run the maven install w/ tests and Sonarqube
+              withSonarQubeEnv('sonarqube') {
+                sh "mvn -Dmaven.test.failure.ignore=true install sonar:sonar"
+              }
+        }
     }
 
-    stage('SonarQube analysis') {
-       steps {
-           withSonarQubeEnv('sonarqube') {
-                sh 'mvn clean package sonar:sonar'
-           } // submitted SonarQube taskId is automatically attached to the pipeline context
-       }
-    }
+//     stage('SonarQube analysis') {
+//        steps {
+//            withSonarQubeEnv('sonarqube') {
+//                 sh 'mvn clean package sonar:sonar'
+//            } // submitted SonarQube taskId is automatically attached to the pipeline context
+//        }
+//     }
 
     stage('docker build/push') {
           steps {

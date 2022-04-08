@@ -12,7 +12,7 @@
 pipeline {
   agent any
   stages {
-    stage("verify tooling") {
+    stage("Verify Tooling") {
       steps {
         sh '''
           docker version
@@ -22,12 +22,12 @@ pipeline {
         '''
       }
     }
-    stage('Prune Docker data') {
+    stage('Prune Docker Data') {
       steps {
         sh 'docker system prune -a --volumes -f'
       }
     }
-    stage('Start container') {
+    stage('Start Container') {
       steps {
         sh 'docker-compose build'
         sh 'docker-compose up -d'
@@ -36,8 +36,9 @@ pipeline {
     stage ('Build & Test w/ SonarQube') {
         steps {
               // Run the maven install w/ tests and Sonarqube
+                sh "mvn -Dmaven.test.failure.ignore=true install"
               withSonarQubeEnv('sonarqube') {
-                sh "mvn -Dmaven.test.failure.ignore=true install sonar:sonar"
+                sh 'mvn clean package sonar:sonar'
               }
         }
     }
@@ -50,7 +51,7 @@ pipeline {
 //        }
 //     }
 
-    stage('docker build/push') {
+    stage('Docker Build/Push') {
           steps {
 
               withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {

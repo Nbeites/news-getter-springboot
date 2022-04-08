@@ -3,14 +3,12 @@
 //git, maven and jdk 11 are installed in Jenkins Dockerfile (the one that runs jenkins on host machine, )
 
 // Install Docker Pipeline Plugin -> Add credentials of Dockerhub in Manage Credentials -> Stores scoped to Jenkins, click (global) and add new credentials
-// with dockerhub as ID
+// with 'dockerhub' as ID (same as declared in this jenkinsfile)
+
 
 
 pipeline {
   agent any
-//   environment {
-//     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-//   }
   stages {
     stage("verify tooling") {
       steps {
@@ -38,6 +36,12 @@ pipeline {
               // Run the maven install w/ tests
               sh "mvn -Dmaven.test.failure.ignore=true install"
             }
+    }
+
+    stage('SonarQube analysis') {
+       withSonarQubeEnv('sonarqube') {
+            sh 'mvn clean package sonar:sonar'
+       } // submitted SonarQube taskId is automatically attached to the pipeline context
     }
 
     stage('docker build/push') {

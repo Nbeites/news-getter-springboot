@@ -1,15 +1,10 @@
-//Before this runs, we have to install  maven in host machine with following command : sudo apt install maven
-// Then execute: whereis mvn (and the result will give maven home, that will be inputted in this jenkinsfile ahead)
-
-
+//git, maven and jdk 11 are installed in Jenkins Dockerfile (the one that runs jenkins on host machine, )
 
 pipeline {
   agent any
-//   tools {
-//     maven 'Maven 3.6.2'
-//     jdk 'jdk11'
-//   }
-
+  environment {
+    DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+  }
   stages {
     stage("verify tooling") {
       steps {
@@ -34,44 +29,28 @@ pipeline {
     }
     stage ('Build & Test') {
         steps {
-//             withMaven(
-//                 // Maven installation declared in the Jenkins "Global Tool Configuration"
-//                 maven: 'maven-3', // (1)
-//                 // Use `$WORKSPACE/.repository` for local repository folder to avoid shared repositories
-//                 mavenLocalRepo: '.repository', // (2)
-//                 // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
-//                 // We recommend to define Maven settings.xml globally at the folder level using
-//                 // navigating to the folder configuration in the section "Pipeline Maven Configuration / Override global Maven configuration"
-//                 // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
-//                 mavenSettingsConfig: 'my-maven-settings' // (3)
-//             ) {
-
-              // Run the maven build
-              sh "mvn -Dmaven.test.failure.ignore=true install"
-
+              // Run the maven install w/ tests
+              def testResult = sh "mvn -Dmaven.test.failure.ignore=true install"
+              if (testResult == 'Failed'){
+                error "Tests Failed"
+              }
             }
-
-//         }// withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe & FindBugs & SpotBugs reports...
-
     }
 
     stage('docker build/push') {
           steps {
-              script {
-                 docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
-                   def app = docker.build("nbeites/news-getter-springboot:${commit_id}", '.').push()
-                 }
-              }
+              sh 'docker build -t nbeites/news-getter-springboot:latest .'
+              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+              sh 'docker push nbeites/news-getter-springboot:latest'
          }
     }
-
   }
-
 
   post {
     always {
       sh 'docker-compose down --remove-orphans -v'
       sh 'docker-compose ps'
+      sh 'docker logout'
       junit 'target/surefire-reports/**/*.xml'
     }
   }

@@ -9,9 +9,7 @@ pipeline {
 //     maven 'Maven 3.6.2'
 //     jdk 'jdk11'
 //   }
-   environment {
-    PATH = /usr/bin/mvn:$PATH
-   }
+
   stages {
     stage("verify tooling") {
       steps {

@@ -1,4 +1,9 @@
+// Define a new project as pipeline and insert this repository and this Jenkinsfile in Path in SCM script (git SCM option in Pipeline)
+
 //git, maven and jdk 11 are installed in Jenkins Dockerfile (the one that runs jenkins on host machine, )
+
+// Install Docker Pipeline Plugin -> Add credentials of Dockerhub in Manage Credentials -> Stores scoped to Jenkins, click (global) and add new credentials
+// with dockerhub as ID
 
 
 pipeline {
@@ -37,9 +42,13 @@ pipeline {
 
     stage('docker build/push') {
           steps {
-              sh 'docker build -t nbeites/news-getter-springboot:latest .'
-              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-              sh 'docker push nbeites/news-getter-springboot:latest'
+
+              withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                  sh 'docker build -t nbeites/news-getter-springboot:latest .'
+                  sh 'docker push nbeites/news-getter-springboot:latest'
+                  sh 'docker push nbeites/news-getter-springboot:$BUILD_NUMBER'
+              }
+
          }
     }
 

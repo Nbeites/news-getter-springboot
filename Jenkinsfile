@@ -3,10 +3,10 @@
 
 pipeline {
   agent any
-//   tools {
-//     maven 'Maven 3.6.2'
-//     jdk 'jdk11'
-//   }
+  tools {
+    maven 'Maven 3.6.2'
+    jdk 'jdk11'
+  }
   stages {
     stage("verify tooling") {
       steps {

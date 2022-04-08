@@ -1,12 +1,17 @@
-//Before this runs, we have to install  maven in global tools configuration under manage jenkins in GUI
-// In Git installation also in global tools configuration, set Git Name: Default and Path to git executable : /usr/local/bin/git
+//Before this runs, we have to install  maven in host machine with following command : sudo apt install maven
+// Then execute: whereis mvn (and the result will give maven home, that will be inputted in this jenkinsfile ahead)
+
+
 
 pipeline {
   agent any
-  tools {
-    maven 'Maven 3.6.2'
-    jdk 'jdk11'
-  }
+//   tools {
+//     maven 'Maven 3.6.2'
+//     jdk 'jdk11'
+//   }
+   environment {
+    PATH = /usr/bin/mvn:$PATH
+   }
   stages {
     stage("verify tooling") {
       steps {

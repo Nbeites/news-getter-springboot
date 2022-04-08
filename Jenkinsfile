@@ -30,10 +30,7 @@ pipeline {
     stage ('Build & Test') {
         steps {
               // Run the maven install w/ tests
-              def testResult = sh "mvn -Dmaven.test.failure.ignore=true install"
-              if (testResult == 'Failed'){
-                error "Tests Failed"
-              }
+              sh "mvn -Dmaven.test.failure.ignore=true install"
             }
     }
 

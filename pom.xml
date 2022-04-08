@@ -141,13 +141,13 @@
 
 		<!-- Bom dependency management -->
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-framework-bom</artifactId>
-			<version>4.2.4.RELEASE</version>
-			<type>pom</type>
-			<scope>import</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework</groupId>-->
+<!--			<artifactId>spring-framework-bom</artifactId>-->
+<!--			<version>4.2.4.RELEASE</version>-->
+<!--			<type>pom</type>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 
 		<!-- Needed for JavaDoc Generation -->
 

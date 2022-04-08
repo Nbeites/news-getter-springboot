@@ -6,7 +6,6 @@ WORKDIR /app
 COPY pom.xml .
 #copy source
 COPY src ./src
-COPY wait-for-sql.sh .
 COPY commands.sh /scripts/commands.sh
 
 # build the app and download dependencies only when these are new (thanks to the cache)

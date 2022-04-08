@@ -4,6 +4,7 @@ Run project:
 
     docker-compose build
     docker-compose up
+    (commands.sh file must be in LF instead of CRLF)
 
 Tear Down:
     

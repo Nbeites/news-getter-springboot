@@ -58,7 +58,6 @@ pipeline {
       sh 'docker-compose down --remove-orphans -v'
       sh 'docker-compose ps'
       sh 'docker logout'
-      junit 'target/surefire-reports/**/*.xml'
     }
   }
 }

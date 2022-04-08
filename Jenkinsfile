@@ -1,5 +1,6 @@
 //git, maven and jdk 11 are installed in Jenkins Dockerfile (the one that runs jenkins on host machine, )
 
+
 pipeline {
   agent any
   environment {
@@ -41,7 +42,9 @@ pipeline {
               sh 'docker push nbeites/news-getter-springboot:latest'
          }
     }
+
   }
+
 
   post {
     always {

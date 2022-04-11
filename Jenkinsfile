@@ -5,7 +5,7 @@
 // Install Docker Pipeline Plugin -> Add credentials of Dockerhub in Manage Credentials -> Stores scoped to Jenkins, click (global) and add new credentials
 // with 'dockerhub' as ID (same as declared in this jenkinsfile)
 
-//SonarQube Plugin must be installed in jenkins as running on server localhost:9000 with the name 'sonarqube' (this example)
+//SonarQube Plugin must be installed (and managed in Global Tools Configration) in jenkins as running on server localhost:9000 with the name 'sonarqube' (this example)
 
 //Install Workspace Cleanup Plugin
 //Install GitHub Checks Plugin (For API tests report - junit in this case)

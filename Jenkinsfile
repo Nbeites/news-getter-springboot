@@ -24,14 +24,17 @@ pipeline {
     }
 
 
-    stage('Prune Docker Data') {
+    stage('Prune Data') {
       steps {
         sh 'docker system prune -a --volumes -f'
+        sh 'rm -r news-getter-springboot'
+        sh 'ls'
       }
     }
 
     stage ('Checkout and Build') {
         steps {
+
               // Run the maven install w/ tests and Sonarqube
               sh 'git clone https://github.com/Nbeites/news-getter-springboot'
               sh 'mvn clean compile'

@@ -36,7 +36,7 @@ pipeline {
     stage ('Build & Test w/ SonarQube') {
         steps {
               // Run the maven install w/ tests and Sonarqube
-//                 sh "mvn -Dmaven.test.failure.ignore=false test"
+                sh "mvn -Dmaven.test.failure.ignore=false test"
 //               withSonarQubeEnv('sonarqube') {
 //                 sh ' mvn test sonar:sonar'
 //               }

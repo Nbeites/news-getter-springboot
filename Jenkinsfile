@@ -51,6 +51,7 @@ pipeline {
 
     stage('Start Test DB Container') {
       steps {
+        sh 'ls'
         sh 'docker-compose -f docker-compose-only-db.yml up -d'
       }
     }

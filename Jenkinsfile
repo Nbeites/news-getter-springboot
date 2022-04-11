@@ -70,7 +70,7 @@ pipeline {
 
     stage('Test') {
        steps {
-         sh 'cd news-getter-springboot'
+//          sh 'cd news-getter-springboot'
          sh 'ls'
          sh 'mvn test'
        }

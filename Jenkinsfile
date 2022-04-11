@@ -12,27 +12,27 @@
 pipeline {
   agent any
   stages {
-    stage("Verify Tooling") {
-      steps {
-        sh '''
-          docker version
-          docker info
-          docker-compose version
-          curl --version
-        '''
-      }
-    }
-    stage('Prune Docker Data') {
-      steps {
-        sh 'docker system prune -a --volumes -f'
-      }
-    }
-    stage('Start Container') {
-      steps {
-        sh 'docker-compose build'
-        sh 'docker-compose up -d'
-      }
-    }
+//     stage("Verify Tooling") {
+//       steps {
+//         sh '''
+//           docker version
+//           docker info
+//           docker-compose version
+//           curl --version
+//         '''
+//       }
+//     }
+//     stage('Prune Docker Data') {
+//       steps {
+//         sh 'docker system prune -a --volumes -f'
+//       }
+//     }
+//     stage('Start Container') {
+//       steps {
+//         sh 'docker-compose build'
+//         sh 'docker-compose up -d'
+//       }
+//     }
     stage ('Build w/ SonarQube') {
         steps {
               // Run the maven install w/ tests and Sonarqube
@@ -47,7 +47,7 @@ pipeline {
 
     stage('Test') {
        steps {
-                sh './mvn test'
+         sh './mvn test'
        }
 
          post {

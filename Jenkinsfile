@@ -33,8 +33,8 @@ pipeline {
     stage ('Checkout and Build') {
         steps {
               // Run the maven install w/ tests and Sonarqube
-              git 'https://github.com/Nbeites/news-getter-springboot'
-              sh './mvnw clean compile'
+              sh 'git clone https://github.com/Nbeites/news-getter-springboot'
+              sh 'mvn clean compile'
 //               sh "mvn -Dmaven.test.failure.ignore=false test"
 //               withSonarQubeEnv('sonarqube') {
 //                 sh ' mvn test sonar:sonar'

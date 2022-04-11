@@ -14,9 +14,32 @@
 	<name>articles</name>
 	<description>Article Repository System</description>
 
+
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
+
+	<settings>
+		<pluginGroups>
+			<pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+		</pluginGroups>
+		<profiles>
+			<profile>
+				<id>sonar</id>
+				<activation>
+					<activeByDefault>true</activeByDefault>
+				</activation>
+				<properties>
+					<!-- Optional URL to server. Default value is http://localhost:9000 -->
+					<sonar.host.url>
+						http://localhost:9000
+					</sonar.host.url>
+				</properties>
+			</profile>
+		</profiles>
+	</settings>
+
 
 	<dependencies>
 
@@ -156,20 +179,7 @@
 			<artifactId>javax.interceptor-api</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<profiles>
-			<profile>
-				<id>sonar</id>
-				<activation>
-					<activeByDefault>true</activeByDefault>
-				</activation>
-				<properties>
-					<!-- Optional URL to server. Default value is http://localhost:9000 -->
-					<sonar.host.url>
-						http://localhost:9000
-					</sonar.host.url>
-				</properties>
-			</profile>
-		</profiles>
+
 
 <!--	Sonarqube	-->
 
@@ -179,9 +189,6 @@
 			<artifactId>sonar-maven-plugin</artifactId>
 			<version>3.2</version>
 		</dependency>
-
-
-
 
 	</dependencies>
 

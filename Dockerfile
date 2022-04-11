@@ -7,6 +7,7 @@ COPY pom.xml .
 #copy source
 COPY src ./src
 COPY commands.sh /scripts/commands.sh
+COPY .mvn .
 
 # build the app and download dependencies only when these are new (thanks to the cache)
 RUN mvn clean package -Dmaven.test.skip

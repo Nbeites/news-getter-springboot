@@ -12,28 +12,25 @@
 pipeline {
   agent any
   stages {
-//     stage("Verify Tooling") {
-//       steps {
-//         sh '''
-//           docker version
-//           docker info
-//           docker-compose version
-//           curl --version
-//         '''
-//       }
-//     }
-//     stage('Prune Docker Data') {
-//       steps {
-//         sh 'docker system prune -a --volumes -f'
-//       }
-//     }
-//     stage('Start Container') {
-//       steps {
-//         sh 'docker-compose build'
-//         sh 'docker-compose up -d'
-//       }
-//     }
-    stage ('Build w/ SonarQube') {
+    stage("Verify Tooling") {
+      steps {
+        sh '''
+          docker version
+          docker info
+          docker-compose version
+          curl --version
+        '''
+      }
+    }
+
+
+    stage('Prune Docker Data') {
+      steps {
+        sh 'docker system prune -a --volumes -f'
+      }
+    }
+
+    stage ('Checkout and Build') {
         steps {
               // Run the maven install w/ tests and Sonarqube
               git 'https://github.com/Nbeites/news-getter-springboot'
@@ -45,6 +42,14 @@ pipeline {
         }
     }
 
+    stage('Start Container') {
+      steps {
+        sh 'docker-compose build'
+        sh 'docker-compose up -d'
+      }
+    }
+
+
     stage('Test') {
        steps {
          sh './mvnw test'
@@ -55,7 +60,6 @@ pipeline {
             junit '**/target/surefire-reports/TEST-*.xml'
            }
          }
-
     }
 
 

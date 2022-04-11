@@ -1,8 +1,7 @@
 #!/bin/bash
 
-#Execute Tests
+##Execute Tests
 mvn test
-
 
 #Execute Spring application
 CMD="java -Djava.security.egd=file:/dev/./urandom -jar news-0.0.1-SNAPSHOT.jar"

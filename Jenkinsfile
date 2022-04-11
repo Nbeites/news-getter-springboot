@@ -42,12 +42,12 @@ pipeline {
         }
     }
 
-    stage('Start Container') {
-      steps {
-        sh 'docker-compose build'
-        sh 'docker-compose up -d'
-      }
-    }
+//     stage('Start Container') {
+//       steps {
+//         sh 'docker-compose -f docker-compose.yml build'
+//         sh 'docker-compose -f docker-compose.yml up -d'
+//       }
+//     }
 
 
     stage('Test') {

@@ -21,6 +21,7 @@ pipeline {
           docker info
           docker-compose version
           curl --version
+          [$class: 'hudson.plugins.chucknorris.CordellWalkerRecorder']
         '''
       }
     }
@@ -32,7 +33,7 @@ pipeline {
         sh 'docker system prune -a --volumes -f'
         sh 'ls'
       }
-      step([$class: 'hudson.plugins.chucknorris.CordellWalkerRecorder'])
+
     }
 
     stage ('Checkout Project & Build') {

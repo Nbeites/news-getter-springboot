@@ -26,6 +26,7 @@ pipeline {
 
     stage('Prune Data') {
       steps {
+        cleanWs()
         sh 'docker system prune -a --volumes -f'
         sh 'rm -r news-getter-springboot'
         sh 'ls'
@@ -35,8 +36,11 @@ pipeline {
     stage ('Checkout and Build') {
         steps {
 
+            checkout scm: [$class: 'GitSCM', branches: [[name: '*/main']],userRemoteConfigs:
+            [[credentialsId: '', url: 'https://github.com/Nbeites/news-getter-springboot']]]
               // Run the maven install w/ tests and Sonarqube
-              sh 'git clone https://github.com/Nbeites/news-getter-springboot'
+//               sh 'git clone https://github.com/Nbeites/news-getter-springboot'
+              sh 'ls'
               sh 'cd news-getter-springboot'
               sh 'mvn clean compile'
 //               sh "mvn -Dmaven.test.failure.ignore=false test"
@@ -66,6 +70,7 @@ pipeline {
     stage('Test') {
        steps {
          sh 'cd news-getter-springboot'
+         sh 'ls'
          sh 'mvn test'
        }
 

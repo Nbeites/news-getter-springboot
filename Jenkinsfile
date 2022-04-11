@@ -56,9 +56,6 @@ pipeline {
     stage('Start Test DB Container') {
       steps {
         sh 'docker ps'
-        sh 'docker stop $(docker ps -a -q)'
-        sh 'docker rm $(docker ps -a -q)'
-        sh 'docker ps'
         sh 'ls'
         sh 'cd news-getter-springboot'
         sh 'ls'
@@ -104,6 +101,7 @@ pipeline {
 
   post {
     always {
+      sh 'docker-compose -f docker-compose-only-db.yml down'
       sh 'docker-compose down --remove-orphans -v'
       sh 'docker-compose ps'
       sh 'docker logout'

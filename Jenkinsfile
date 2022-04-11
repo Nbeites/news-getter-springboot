@@ -49,10 +49,15 @@ pipeline {
 //       }
 //     }
 
+    stage('Start Test DB Container') {
+      steps {
+        sh 'docker-compose -f docker-compose-only-db.yml up -d'
+      }
+    }
 
     stage('Test') {
        steps {
-         sh './mvnw test'
+         sh 'mvn test'
        }
 
          post {

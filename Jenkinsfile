@@ -33,7 +33,7 @@ pipeline {
         sh 'docker-compose up -d'
       }
     }
-    stage ('Build & Test w/ SonarQube') {
+    stage ('Build w/ SonarQube') {
         steps {
               // Run the maven install w/ tests and Sonarqube
               git 'https://github.com/Nbeites/news-getter-springboot'
@@ -44,6 +44,20 @@ pipeline {
 //               }
         }
     }
+
+    stage('Test') {
+       steps {
+                sh './mvn test'
+       }
+
+         post {
+           always {
+            junit '**/target/surefire-reports/TEST-*.xml'
+           }
+         }
+
+    }
+
 
 //     stage('SonarQube analysis') {
 //        steps {

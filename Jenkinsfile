@@ -7,7 +7,7 @@
 
 //SonarQube Plugin must be installed in jenkins as running on server localhost:9000 with the name 'sonarqube' (this example)
 
-
+//Install Workspace Clean Plugin
 
 pipeline {
   agent any
@@ -94,7 +94,7 @@ pipeline {
 
     stage('Docker Build/Push') {
           steps {
-
+                sh 'ls'
               withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
                   sh 'docker build -t nbeites/news-getter-springboot:latest .'
                   sh 'docker push nbeites/news-getter-springboot:latest'

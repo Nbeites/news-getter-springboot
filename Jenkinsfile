@@ -72,7 +72,7 @@ pipeline {
        steps {
 //          sh 'cd news-getter-springboot'
          sh 'ls'
-         sh 'mvn test'
+         sh 'mvn clean package'
        }
 
          post {

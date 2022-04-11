@@ -61,7 +61,7 @@ pipeline {
       steps {
         sh 'docker ps'
         sh 'ls'
-        sh 'cd news-getter-springboot'
+//         sh 'cd news-getter-springboot'
         sh 'ls'
         sh 'docker-compose -f docker-compose-only-db.yml up -d'
         sh 'sleep 10'

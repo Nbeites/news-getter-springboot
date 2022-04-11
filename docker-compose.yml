@@ -14,7 +14,7 @@ services:
 #    networks:
 #      - spring-cloud-network
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db:5436/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update

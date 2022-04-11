@@ -25,6 +25,8 @@ COPY target/news-0.0.1-SNAPSHOT.jar news-0.0.1-SNAPSHOT.jar
 RUN ["chmod", "+x", "/scripts/commands.sh"]
 ENTRYPOINT ["/scripts/commands.sh"]
 
+RUN mvn test
+
 #copy built app layer by layer
 # ARG DOCKER_PACKAGING_DIR=/app/target/docker-packaging
 # COPY --from=maven_build ${DOCKER_PACKAGING_DIR}/BOOT-INF/lib /app/lib

@@ -55,6 +55,12 @@ pipeline {
 
     stage('Start Test DB Container') {
       steps {
+        sh 'docker ps'
+        sh 'docker stop $(docker ps -a -q)'
+        sh 'docker rm $(docker ps -a -q)'
+        sh 'docker ps'
+        sh 'ls'
+        sh 'cd news-getter-springboot'
         sh 'ls'
         sh 'docker-compose -f docker-compose-only-db.yml up -d'
       }
@@ -62,11 +68,13 @@ pipeline {
 
     stage('Test') {
        steps {
+         sh 'cd news-getter-springboot'
          sh 'mvn test'
        }
 
          post {
            always {
+            sh 'ls'
             junit '**/target/surefire-reports/TEST-*.xml'
            }
          }

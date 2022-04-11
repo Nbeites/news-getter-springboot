@@ -28,7 +28,7 @@ pipeline {
       steps {
         cleanWs()
         sh 'docker system prune -a --volumes -f'
-        sh 'rm -r news-getter-springboot'
+//         sh 'rm -r news-getter-springboot'
         sh 'ls'
       }
     }

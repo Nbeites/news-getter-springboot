@@ -32,6 +32,7 @@ pipeline {
         sh 'docker system prune -a --volumes -f'
         sh 'ls'
       }
+      step([$class: 'hudson.plugins.chucknorris.CordellWalkerRecorder'])
     }
 
     stage ('Checkout Project & Build') {

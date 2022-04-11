@@ -41,7 +41,7 @@ pipeline {
               // Run the maven install w/ tests and Sonarqube
 //               sh 'git clone https://github.com/Nbeites/news-getter-springboot'
               sh 'ls'
-              sh 'cd news-getter-springboot'
+//               sh 'cd news-getter-springboot'
               sh 'mvn clean compile'
 //               sh "mvn -Dmaven.test.failure.ignore=false test"
 //               withSonarQubeEnv('sonarqube') {
@@ -64,6 +64,7 @@ pipeline {
         sh 'cd news-getter-springboot'
         sh 'ls'
         sh 'docker-compose -f docker-compose-only-db.yml up -d'
+        sh 'sleep 10'
       }
     }
 

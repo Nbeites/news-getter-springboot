@@ -20,3 +20,6 @@ Endpoint Get All Articles Example:
     http://<IP_ADDRESS>:8082/api/articles
     (Other endpoints can be seen in swagger)
 
+For Jenkins + SonarQube installation on host machine, refer to:
+    
+    https://github.com/Nbeites/jenkins-sonarqube-compose

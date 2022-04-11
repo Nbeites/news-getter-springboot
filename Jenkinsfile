@@ -5,7 +5,7 @@
 // Install Docker Pipeline Plugin -> Add credentials of Dockerhub in Manage Credentials -> Stores scoped to Jenkins, click (global) and add new credentials
 // with 'dockerhub' as ID (same as declared in this jenkinsfile)
 
-//SonarQube Plugin must be installed (and managed in Global Tools Configration) in jenkins as running on server localhost:9000 with the name 'sonarqube' (this example)
+//SonarQube Plugin must be installed (and managed in Configure System(Jenkins Config)) in jenkins as running on server http://localhost:9000 with the name 'sonarqube' (this example)
 
 //Install Workspace Cleanup Plugin
 //Install GitHub Checks Plugin (For API tests report - junit in this case)
@@ -66,14 +66,20 @@ pipeline {
       }
     }
 
-    stage('Test') {
+    stage('Maven Tests') {
        steps {
-//          sh 'cd news-getter-springboot'
          sh 'ls'
 
-         withSonarQubeEnv('sonarqube') {
-           sh 'mvn clean package sonar:sonar'
-         }
+        //credentialsId that are defined in jenkins in Manage Credentials for Sonarqube (user:admin ; pass:<defined in first sonar use>)
+        //Go to sonarqube web page, then go to administration, after that go to security and disable " Force User Authentication".
+
+//          withSonarQubeEnv('credentialsId: 'sonar-admin', installationName:sonarqube') {
+//            sh 'mvn clean package sonar:sonar'
+//          }
+
+          withSonarQubeEnv('sonarqube') {
+            sh 'mvn clean package sonar:sonar'
+          }
 
        }
 

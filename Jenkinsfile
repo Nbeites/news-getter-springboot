@@ -95,8 +95,7 @@ pipeline {
     stage('Docker Build/Push') {
           steps {
                 sh 'ls'
-                sh 'cd target'
-                sh 'ls'
+                sh 'cat Dockerfile'
               withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
                   sh 'docker build -t nbeites/news-getter-springboot:latest .'
                   sh 'docker push nbeites/news-getter-springboot:latest'

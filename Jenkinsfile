@@ -21,7 +21,6 @@ pipeline {
           docker info
           docker-compose version
           curl --version
-          [$class: 'hudson.plugins.chucknorris.CordellWalkerRecorder']
         '''
       }
     }

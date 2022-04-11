@@ -5,7 +5,8 @@
 // Install Docker Pipeline Plugin -> Add credentials of Dockerhub in Manage Credentials -> Stores scoped to Jenkins, click (global) and add new credentials
 // with 'dockerhub' as ID (same as declared in this jenkinsfile)
 
-//SonarQube Plugin must be installed (and managed in Configure System(Jenkins Config)) in jenkins as running on server http://localhost:9000 with the name 'sonarqube' (this example)
+//SonarQube Plugin must be installed (and managed in Configure System(Jenkins Config)) in jenkins as running on server http://<LOCALHOST_IP>:9000 with the name 'sonarqube' (this example)
+//Go to sonarqube web page, then go to administration, after that go to security and disable " Force User Authentication".
 
 //Install Workspace Cleanup Plugin
 //Install GitHub Checks Plugin (For API tests report - junit in this case)
@@ -25,7 +26,7 @@ pipeline {
     }
 
 
-    stage('Prune Data') {
+    stage('Clean Workspace & Prune Data') {
       steps {
         cleanWs()
         sh 'docker system prune -a --volumes -f'
@@ -33,7 +34,7 @@ pipeline {
       }
     }
 
-    stage ('Checkout and Build') {
+    stage ('Checkout Project & Build') {
         steps {
 
             checkout scm: [$class: 'GitSCM', branches: [[name: '*/main']],userRemoteConfigs:
@@ -66,17 +67,17 @@ pipeline {
       }
     }
 
-    stage('Maven Tests') {
+    stage('Maven Tests w/ SonarQube Analysis') {
        steps {
          sh 'ls'
 
         //credentialsId that are defined in jenkins in Manage Credentials for Sonarqube (user:admin ; pass:<defined in first sonar use>)
-        //Go to sonarqube web page, then go to administration, after that go to security and disable " Force User Authentication".
 
 //          withSonarQubeEnv('credentialsId: 'sonar-admin', installationName:sonarqube') {
 //            sh 'mvn clean package sonar:sonar'
 //          }
 
+//Go to sonarqube web page, then go to administration, after that go to security and disable " Force User Authentication".
           withSonarQubeEnv('sonarqube') {
             sh 'mvn clean package sonar:sonar'
           }
@@ -100,7 +101,7 @@ pipeline {
 //        }
 //     }
 
-    stage('Docker Build/Push') {
+    stage('Docker Build/Push - DockerHub') {
           steps {
                 sh 'ls'
                 sh 'cat Dockerfile'

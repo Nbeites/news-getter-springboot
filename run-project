@@ -1,5 +1,0 @@
-# how run the project:
-
-- docker-compose up (database up)
-
-- in intelliJ : run: maven clean install, then springboot:run in inteliJ configuration

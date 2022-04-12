@@ -1,7 +1,0 @@
-Create and run containers : docker-compose up -d
-
-Build: docker-compose build
-
-Up : docker-compose up
-
-Down : docker-compose down

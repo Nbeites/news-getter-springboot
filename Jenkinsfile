@@ -43,10 +43,6 @@ pipeline {
               // Run the maven clean compile
               sh 'ls'
               sh 'mvn clean compile'
-//               sh "mvn -Dmaven.test.failure.ignore=false test"
-//               withSonarQubeEnv('sonarqube') {
-//                 sh ' mvn test sonar:sonar'
-//               }
         }
     }
 
@@ -61,8 +57,6 @@ pipeline {
       steps {
         sh 'docker ps'
         sh 'ls'
-//         sh 'cd news-getter-springboot'
-        sh 'ls'
         sh 'docker-compose -f docker-compose-only-db.yml up -d'
         sh 'sleep 10'
       }
@@ -72,8 +66,7 @@ pipeline {
        steps {
          sh 'ls'
 
-        //credentialsId that are defined in jenkins in Manage Credentials for Sonarqube (user:admin ; pass:<defined in first sonar use>)
-
+// credentialsId that are defined in jenkins in Manage Credentials for Sonarqube (user:admin ; pass:<defined in first sonar use>)
 //          withSonarQubeEnv('credentialsId: 'sonar-admin', installationName:sonarqube') {
 //            sh 'mvn clean package sonar:sonar'
 //          }
@@ -93,14 +86,6 @@ pipeline {
          }
     }
 
-
-//     stage('SonarQube analysis') {
-//        steps {
-//            withSonarQubeEnv('sonarqube') {
-//                 sh 'mvn clean package sonar:sonar'
-//            } // submitted SonarQube taskId is automatically attached to the pipeline context
-//        }
-//     }
 
     stage('Docker Build/Push - DockerHub') {
           steps {
